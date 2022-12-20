@@ -4,6 +4,14 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      name: {firstName: 'Sush', lastName: 'Mullur'}, 
+      company: 'Amazon'
+    };
+  }
 
   render() {
     return (
@@ -11,16 +19,21 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Hello, my name is Sush. 
+            Hello, {this.state.name.firstName} {this.state.name.lastName}! I work at {this.state.company}. 
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <button onClick={() => { 
+            this.setState(() => {
+              return {
+                name: { firstName: 'Kanye', lastName: 'West'},
+              }
+            }, 
+            () => {
+              console.log(this.state);
+            });
+            
+          }}>
+            Change Name
+          </button>
         </header>
       </div>
     );
