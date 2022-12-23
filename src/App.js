@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import './App.css';
 import SearchBox from './components/search-box/search-box.component';
 
 const App = () => {
-
+  console.log('render');
   const [searchField, setSearchField] = useState('');
+  const [monsters, setMonsters] = useState([]);
+
+  console.log('render');
+
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((users) => setMonsters(users));
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
     setSearchField(searchFieldString);
   }
+
+  const filteredMonsters = monsters.filter((monster) => {
+          return monster.name.toLowerCase().includes(searchField);
+      });
 
 
   return (
@@ -24,8 +35,7 @@ const App = () => {
         placeholder= 'Search Monsters...' 
         className = 'monsters-search-box'
       />
-      {/* 
-      <CardList monsters={filteredMonsters} /> */}
+      <CardList monsters={filteredMonsters} /> 
     </div>
   );
 }
@@ -40,14 +50,14 @@ const App = () => {
 //     };
 //   }
 
-//   componentDidMount() {
-//     fetch('https://jsonplaceholder.typicode.com/users')
-//     .then((response) => response.json())
-//     .then((users) => this.setState(() => {
-//       return {monsters: users}
-//     }
-//     ));
-//   }
+  // componentDidMount() {
+  //   fetch('https://jsonplaceholder.typicode.com/users')
+  //   .then((response) => response.json())
+  //   .then((users) => this.setState(() => {
+  //     return {monsters: users}
+  //   }
+  //   ));
+  // }
 
 //   onSearchChange = (event) => {
 //     
